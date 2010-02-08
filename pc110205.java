@@ -3,9 +3,6 @@ public class pc110205 {
 	public static void main (String args[]){
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
-		String input = new String();
-		
-		System.out.println(input);
 		for(int i=0;i<n;i++){
 			int[] d = new int[52];
 			for(int j=0;j<52;j++){
@@ -37,7 +34,9 @@ public class pc110205 {
 			for(int j=0;j<52;j++){
 				System.out.println(int2name(d[j]));
 			}
-			System.out.println();
+			if(i!=n-1){
+				System.out.println();
+			}
 		}
 	}
 	
