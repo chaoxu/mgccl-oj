@@ -1,7 +1,6 @@
 import java.util.*;
+
 public class pc110405 {
-	static int[] d;
-	static int[][] s;
 	public static void main (String args[]){
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
@@ -10,44 +9,31 @@ public class pc110405 {
 				System.out.println();
 			}
 			int m = in.nextInt();
-			s = new int[m][2];
-			d = new int[m];
+			double[][] s = new double[m][2];
 			for(int j=0;j<m;j++){
-				s[j][0] = in.nextInt();
-				s[j][1] = in.nextInt();
+				s[j][0] = (double) (j+1);
+				s[j][1] = in.nextDouble()/in.nextDouble();
 			}
-			find_next(m);
+			doublesort st = new doublesort();
+			Arrays.sort(s,st);
+			for(int j=0;j<m-1;j++){
+				System.out.print((int) s[j][0]+" ");
+			}
+			System.out.println((int) s[m-1][0]);
 		}
 	}
-	
-	static void find_next(int m){
-		if(m==1){
-			for(int i=0;i<s.length;i++){
-				if(d[i]!=1){
-					System.out.println(i+1);
-					return;
-				}
-			}
-		}
-		for(int i=0;i<s.length;i++){
-			if(d[i]!=1){
-				//select as pivot
-				boolean p = true;
-				for(int j=i+1;j<s.length;j++){
-					if(d[j]!=1){
-						if(s[i][0]*s[j][1]>s[j][0]*s[i][1]){
-							p = false;
-							break;
-						}
-					}
-				}
-				if(p){
-					System.out.print(i+1+" ");
-					d[i]=1;
-					find_next(m-1);
-					return;
-				}
-			}
-		}
-	}
+}
+class doublesort implements Comparator<double[]>{
+    public int compare(double[] o1, double[] o2) {
+    	if(o1[1]>o2[1]){
+    		return 1;
+    	}
+    	if(o1[1]<o2[1]){
+    		return -1;
+    	}
+    	if(o1[0]>o2[0]){
+    		return 1;
+    	}
+    	return -1;
+    }
 }
