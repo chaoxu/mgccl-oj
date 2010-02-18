@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 
 public class commons {
     static int[] extended_gcd(int a, int b, int s1, int t1, int s2, int t2){		
@@ -15,4 +17,18 @@ public class commons {
      	   return b;
         return gcd(b, a%b);
    }
+   
+}
+
+class sorttemplate implements Comparator<int[]>{
+
+    public int compare(int[] o1, int[] o2) {
+    	if(o1[5]>o2[5]){
+    		return -1;
+    	}
+    	if(o1[5]<o2[5]){
+    		return 1;
+    	}
+    	return 0;
+    }
 }

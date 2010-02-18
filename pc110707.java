@@ -8,17 +8,13 @@ public class pc110707 {
                        int n1 = in.nextInt();
                        int c2 = in.nextInt();
                        int n2 = in.nextInt();
-                       int no = n;
                        int d = gcd(n1,n2);
                        //Find which box is less cost effective
-                       int ln,mn,t=0;
+                       int ln=n1,mn=n2,t=0;
                        if((((double) n1)/((double) c1))>(((double) n2)/((double) c2))){
                     	   t = 1;
                     	   ln = n2;
                     	   mn = n1;
-                       }else{
-                    	   ln=n1;
-                    	   mn = n2;
                        }
                        boolean failed = true;
                        int j=0;
