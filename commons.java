@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.text.*;
 import java.util.*;
 
@@ -25,6 +26,18 @@ public class commons {
      	   return b;
         return gcd(b, a%b);
    }
+   /*static int[] factor(int n){
+	   //p is a list of prime numbers
+		int k = n;
+		//int[] f = new int[p.length];
+		//for(int i=0;i<p.length;i++){
+		//	while(k%p[i])==0){
+		//		k = k/p[i];
+		//		f[i]++;
+		//	}
+		//}
+		//return f;
+	}*/
    
 }
 
