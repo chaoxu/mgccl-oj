@@ -1,7 +1,15 @@
-import java.util.Comparator;
+import java.text.*;
+import java.util.*;
 
 
 public class commons {
+	
+	static void common_lines(){
+	    NumberFormat num=NumberFormat.getInstance();
+	    num.setMinimumFractionDigits(3);
+	    num.setMaximumFractionDigits(3);
+	    num.setGroupingUsed(false);
+	}
     static int[] extended_gcd(int a, int b, int s1, int t1, int s2, int t2){		
         if(a*s1+b*t1==1){
         	int[] m = {s1,t1};
