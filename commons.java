@@ -38,6 +38,36 @@ public class commons {
 		//}
 		//return f;
 	}*/
+   public static long pow_mod(int a,int e,int n){
+   	long t = 1;
+   	if(e==0){
+   		return t;
+   	}
+   	long sq = pow_mod(a,e/2,n);
+   	t = (sq*sq)%n;
+	    if(e%2==1){
+	    	t*=a;
+	    }
+	    return t%n;
+   }
+   public static double angle(double x, double y){
+		if(x>0&&y>=0){
+			return Math.atan(y/x);
+		}
+		if(x>0&&y<0){
+			return Math.atan(y/x)+2.0*Math.PI;
+		}
+		if(x<0){
+			return Math.atan(y/x)+Math.PI;
+		}
+		if(x==0&&y<0){
+			return 1.5*Math.PI;
+		}
+		if(x==0&&y>0){
+			return Math.PI*0.5;
+		}
+		return 0.0;
+   }
    
 }
 
