@@ -1,7 +1,5 @@
 import java.util.*;
-
 public class uva10150 {
-	
       public static Map<String,Set<String>> s;
       public static void main(String[] args){
               Scanner in = new Scanner(System.in);
@@ -35,7 +33,6 @@ public class uva10150 {
                       if(k!=0){
                           System.out.println();
                       }
-                      boolean no = true;
                       if(s1.length()==s2.length()&&s.containsKey("0".concat(s1.substring(1)))&&s.get("0".concat(s1.substring(1))).contains(s1)){
                     		search(s1,s2);
                       }else{

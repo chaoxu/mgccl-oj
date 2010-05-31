@@ -50,6 +50,15 @@ public class commons {
 	    }
 	    return t%n;
    }
+   
+	public static int digit_sum(int n, int b){
+		int s = 0;
+		while(n!=0){
+			s+=n%b;
+			n/=b;
+		}
+		return s;
+	}
    public static double angle(double x, double y){
 		if(x>0&&y>=0){
 			return Math.atan(y/x);
@@ -69,16 +78,24 @@ public class commons {
 		return 0.0;
    }
    
+	public static boolean is_prime(int d){
+		int s = (int) Math.sqrt(d);
+		for(int i=2;i<=s;i++){
+			if(d%i==0){
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 class sorttemplate implements Comparator<int[]>{
-
     public int compare(int[] o1, int[] o2) {
-    	if(o1[5]>o2[5]){
-    		return -1;
-    	}
-    	if(o1[5]<o2[5]){
+    	if(o1[0]>o2[0]){
     		return 1;
+    	}
+    	if(o1[0]<o2[0]){
+    		return -1;
     	}
     	return 0;
     }
