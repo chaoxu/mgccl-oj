@@ -26,18 +26,18 @@ public class commons {
      	   return b;
         return gcd(b, a%b);
    }
-   /*static int[] factor(int n){
-	   //p is a list of prime numbers
+   static int[] factor(int n){
+	    // p is a list of prime numbers
 		int k = n;
-		//int[] f = new int[p.length];
-		//for(int i=0;i<p.length;i++){
-		//	while(k%p[i])==0){
-		//		k = k/p[i];
-		//		f[i]++;
-		//	}
-		//}
-		//return f;
-	}*/
+		int[] f = new int[p.length];
+		for(int i=0;i<p.length;i++){
+			while(k%p[i])==0){
+				k = k/p[i];
+				f[i]++;
+			}
+		}
+		return f;
+	}
    public static long pow_mod(int a,int e,int n){
    	long t = 1;
    	if(e==0){
@@ -78,6 +78,19 @@ public class commons {
 		return 0.0;
    }
    
+	public static int[] prime_list(int n){
+		ArrayList<Integer> a = new ArrayList<Integer>();
+		for(int i=2;i<=n;i++){
+			if(is_prime(i)){
+				a.add(i);
+			}
+		}
+		int[] r = new int[a.size()];
+		for(int i=0;i<a.size();i++){
+			r[i] = a.get(i);
+		}
+		return r;
+	}
 	public static boolean is_prime(int d){
 		int s = (int) Math.sqrt(d);
 		for(int i=2;i<=s;i++){
@@ -86,6 +99,36 @@ public class commons {
 			}
 		}
 		return true;
+	}
+	public static int[] prime_seive(int n){
+		ArrayList<Integer> p = new ArrayList<Integer>();
+		boolean[] a = new boolean[n+1];
+		for (int i=2;i<=n;i++){
+			if (!a[i]){
+				p.add(i);
+			}
+			for (int j=1;((j<=p.size()) && (i*p.get(j-1)<=n)); j++){
+				a[i*p.get(j-1)] = true ;
+				if (i%p.get(j-1) == 0) break;
+			}
+		}
+		int[] b = new int[p.size()];
+		for(int i=0;i<b.length;i++){
+			b[i] = p.get(i);
+		}
+		return b;
+	}
+
+	public static String string_pad_left(String s, int n, char c){
+		char[] t = new char[n];
+		for(int i=0;i<n-s.length();i++){
+			t[i] = c;
+		}
+		char[] p = s.toCharArray();
+		for(int i=n-p.length;i<n;i++){
+			t[i] = p[i-(n-p.length)];
+		}
+		return String.valueOf(t);
 	}
 }
 
@@ -99,4 +142,17 @@ class sorttemplate implements Comparator<int[]>{
     	}
     	return 0;
     }
+}
+class sorttemplate2 implements Comparator<int[]>{
+    public int compare(int[] o1, int[] o2) {
+    	for(int i=0;i<o1.length;i++){
+			if(o1[i]>o2[i]){
+    			return 1;
+    		}
+    		if(o1[i]<o2[i]){
+    			return -1;
+    		}
+		}
+		return 0;
+	}
 }
