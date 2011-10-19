@@ -130,6 +130,35 @@ public class commons {
 		}
 		return String.valueOf(t);
 	}
+	public static int sum(int[] a){
+		int sum = 0;
+		for(int i=0;i<a.length;i++){
+			sum+=a[i];
+		}
+		return sum;
+	}
+	public static int prod(int[] a){
+		return prodmod(a,2147483647);
+	}
+	public static int prodmod(int[] a, int k){
+		int prod = 1;
+		for(int i=0;i<a.length;i++){
+			prod*=(a[i]%k);
+			prod%=k;
+		}
+		return prod;
+	}
+	public static long prod(long[] a){
+		return prodmod(a,9223372036854775807L);
+	}
+	public static long prodmod(long[] a, long k){
+		long prod = 1;
+		for(int i=0;i<a.length;i++){
+			prod*=(a[i]%k);
+			prod%=k;
+		}
+		return prod;
+	}
 }
 
 class sorttemplate implements Comparator<int[]>{
