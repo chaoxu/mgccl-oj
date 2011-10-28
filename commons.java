@@ -26,6 +26,19 @@ public class commons {
      	   return b;
         return gcd(b, a%b);
    }
+   static int[] digit(int n, int m){
+	   ArrayList<Integer> a = new ArrayList<Integer>();
+	   while(n>0){
+		   a.add(n%m);
+		   n/=m;
+	   }
+	   int[] r = new int[a.size()];
+	   for(int i=0;i<a.size();i++){
+		   r[i] = a.get(i);
+		   
+	   }
+	   return r;
+   }
    static int[] factor(int n){
 	    // p is a list of prime numbers
 		int k = n;
@@ -118,7 +131,20 @@ public class commons {
 		}
 		return b;
 	}
-
+	public static long choose(int n, int r){
+		if(n-r>r){
+			r = n-r;
+		}
+		int s = 1;
+		for(int i=0, j=1; i<r;i++){
+			s*=(n-i);
+			for(;j<=r && s%j==0;++j){
+				s/=j;
+			}
+		}
+		return s;
+	}
+	
 	public static String string_pad_left(String s, int n, char c){
 		char[] t = new char[n];
 		for(int i=0;i<n-s.length();i++){
