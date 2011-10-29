@@ -39,12 +39,12 @@ public class commons {
 	   }
 	   return r;
    }
-   static int[] factor(int n){
+   static int[] factor(int n, int[] p){
 	    // p is a list of prime numbers
 		int k = n;
 		int[] f = new int[p.length];
 		for(int i=0;i<p.length;i++){
-			while(k%p[i])==0){
+			while((k%p[i])==0){
 				k = k/p[i];
 				f[i]++;
 			}
@@ -211,3 +211,4 @@ class sorttemplate2 implements Comparator<int[]>{
 		return 0;
 	}
 }
+
