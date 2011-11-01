@@ -21,11 +21,6 @@ public class commons {
         t2 = (t2-r*t1);
         return extended_gcd(a, b, s2, t2, s1, t1);
    }
-   static int gcd(int a, int b){
-        if(a%b==0)
-     	   return b;
-        return gcd(b, a%b);
-   }
    static int[] digit(int n, int m){
 	   ArrayList<Integer> a = new ArrayList<Integer>();
 	   while(n>0){
@@ -185,6 +180,43 @@ public class commons {
 		}
 		return prod;
 	}
+		   static String lastkdigit(int n,int k){
+		   String s = padleft(Integer.toString(n),k,'0');
+		   return s.substring(s.length()-k);
+	   }
+	   //pad the string with a character if length < n, O(n^2)
+	   static String padleft(String s, int n, char c){
+		   return n<=s.length()?s:c+padleft(s,n-1,c);
+	   }
+	   //reverse the string, note O(n^2) algorithm since string are immutable
+	   static String reverse(String s){
+		   return s.length()<2?s:reverse(s.substring(1))+s.charAt(0);
+	   }
+	   //repeat the string n time, for example repeat("ab",3) = "ababab", O(|a|n^2)
+	   static String repeat(String a, int n){
+		   return n<1?"":a+repeat(a,n-1);
+	   }
+	   //check if the character is alphanumberic, O(1)
+	   static boolean isAlphaNumeric(char c){
+		   return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".indexOf(c)!=-1;
+	   }
+	   //check if a regular expression matches the entire string. O(|s|)
+	   static boolean regex(String s,String p){
+		   return Pattern.compile(p).matcher(s).matches();
+	   }
+	   //input should be a sorted list of points of the polygonal chain that forms a polygon, exclude the last point
+	   static double polygonArea(ArrayList<Point2D> a){
+		   double s=0;
+		   a.add(a.get(0));
+		   for(int i=0;i<a.size()-1;i++){
+			   s+=a.get(i).getX()*a.get(i+1).getY()-a.get(i+1).getX()*a.get(i).getY();
+		   }
+		   a.remove(a.size()-1);
+		   return 0.5*s;
+	   }
+	   static int gcd(int a, int b){
+		   return a%b==0?b:gcd(b, a%b);
+	   }
 }
 
 class sorttemplate implements Comparator<int[]>{
