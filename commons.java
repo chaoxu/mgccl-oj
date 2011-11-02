@@ -5,36 +5,34 @@ import java.util.regex.*;
 import java.awt.geom.*;
 
 public class commons {
-	
+	//things to do
+	//2d boards/circular array/torus
+	//more advanced data structure
 	static void common_lines(){
 	    NumberFormat num=NumberFormat.getInstance();
 	    num.setMinimumFractionDigits(3);
 	    num.setMaximumFractionDigits(3);
 	    num.setGroupingUsed(false);
 	}
-    static int[] extended_gcd(int a, int b, int s1, int t1, int s2, int t2){		
-        if(a*s1+b*t1==1){
-        	int[] m = {s1,t1};
-        	return m;
+    static int[] extended_gcd(int a, int b, int s1, int t1, int s2, int t2){
+    	int[] m = {s1,t1};
+        if(a*s1+b*t1!=1){
+            int r = (s2*a+t2*b)/(s1*a+t1*b);
+            s2 = (s2-r*s1);
+            t2 = (t2-r*t1);
+            m = extended_gcd(a, b, s2, t2, s1, t1);
         }
-        int r = (s2*a+t2*b)/(s1*a+t1*b);
-        s2 = (s2-r*s1);
-        t2 = (t2-r*t1);
-        return extended_gcd(a, b, s2, t2, s1, t1);
+        return m;
    }
-   static int[] digit(int n, int m){
-	   ArrayList<Integer> a = new ArrayList<Integer>();
-	   while(n>0){
-		   a.add(n%m);
-		   n/=m;
-	   }
-	   int[] r = new int[a.size()];
-	   for(int i=0;i<a.size();i++){
-		   r[i] = a.get(i);
-		   
-	   }
-	   return r;
-   }
+	//Find the digits of n in base b.
+    static ArrayList<Integer> digit(int n, int b){
+    	ArrayList<Integer> z = new ArrayList<Integer>();
+    	if(n>0){
+    		z = digit(n/b, b);
+    		z.add(n%b);
+    	}
+    	return z;
+    }
    static int[] factor(int n, int[] p){
 	    // p is a list of prime numbers
 		int k = n;
@@ -59,7 +57,6 @@ public class commons {
 	    }
 	    return t%n;
    }
-   
 	public static int digit_sum(int n, int b){
 		int s = 0;
 		while(n!=0){
@@ -86,28 +83,18 @@ public class commons {
 		}
 		return 0.0;
    }
-   
 	public static int[] prime_list(int n){
 		ArrayList<Integer> a = new ArrayList<Integer>();
-		for(int i=2;i<=n;i++){
-			if(is_prime(i)){
-				a.add(i);
-			}
-		}
+		for(int i=2;i<=n;i++)
+			if(isPrime(i)) a.add(i);
 		int[] r = new int[a.size()];
 		for(int i=0;i<a.size();i++){
 			r[i] = a.get(i);
 		}
 		return r;
 	}
-	public static boolean is_prime(int d){
-		int s = (int) Math.sqrt(d);
-		for(int i=2;i<=s;i++){
-			if(d%i==0){
-				return false;
-			}
-		}
-		return true;
+	public static boolean isPrime(int d){
+		return BigInteger.valueOf(d).isProbablePrime(32);
 	}
 	public static int[] prime_seive(int n){
 		ArrayList<Integer> p = new ArrayList<Integer>();
@@ -139,18 +126,6 @@ public class commons {
 			}
 		}
 		return s;
-	}
-	
-	public static String string_pad_left(String s, int n, char c){
-		char[] t = new char[n];
-		for(int i=0;i<n-s.length();i++){
-			t[i] = c;
-		}
-		char[] p = s.toCharArray();
-		for(int i=n-p.length;i<n;i++){
-			t[i] = p[i-(n-p.length)];
-		}
-		return String.valueOf(t);
 	}
 	public static int sum(int[] a){
 		int sum = 0;
@@ -216,7 +191,28 @@ public class commons {
 		   return 0.5*s;
 	   }
 	   static int gcd(int a, int b){
-		   return a%b==0?b:gcd(b, a%b);
+		   return a%b==0?b:gcd(b,a%b);
+	   }
+	   static int c(int[][] m, int x, int y){
+		   return m[m.length-(x%m.length)][m[0].length-(y%m.length)];
+	   }
+	   static int c(int[] m, int x){
+		   return m[m.length-(x%m.length)];
+	   }
+	   //not tested, longest increasing subsequence
+	   //strictly increasing? or just increasing?
+	   static ArrayList<Integer> lis(ArrayList<Integer> l){
+		   ArrayList<Integer> b = new ArrayList<Integer>();
+		   for(int i=0;i<l.size();i++){
+	           int a = l.get(i);
+	           if(b.size()==0 || b.get(b.size()-1)<a){
+	               b.add(a);
+	           }else{
+	               int t = Math.max(0,Math.abs(Collections.binarySearch(b, a))-1);
+	               if(a<b.get(t)) b.set(t, a);
+	           }
+		   }
+		   return b;
 	   }
 }
 
