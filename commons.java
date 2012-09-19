@@ -1,8 +1,13 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
 import java.awt.geom.*;
+//Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
 
 public class commons {
 	//things to do
@@ -33,7 +38,7 @@ public class commons {
     	}
     	return z;
     }
-   static int[] factor(int n, int[] p){
+   static int[] factorbasis(int n, int[] p){
 	    // p is a list of prime numbers
 		int k = n;
 		int[] f = new int[p.length];
@@ -45,6 +50,24 @@ public class commons {
 		}
 		return f;
 	}
+   static int[] factor(int n, int[] p){
+	    int k = n;
+	    ArrayList<Integer> f = new ArrayList<Integer>();
+		int i = 0;
+		while(k!=1){
+			while((k%p[i])==0){
+				k = k/p[i];
+				f.add(p[i]);
+			}
+			i++;
+		}
+		int[] b = new int[f.size()];
+		for(int j=0;j<f.size();j++){
+			b[j] = f.get(j);
+		}
+		return b;
+   }
+
    public static long pow_mod(int a,int e,int n){
    	long t = 1;
    	if(e==0){
@@ -83,37 +106,44 @@ public class commons {
 		}
 		return 0.0;
    }
-	public static int[] prime_list(int n){
+	static int[] prime_list(int n){
 		ArrayList<Integer> a = new ArrayList<Integer>();
 		for(int i=2;i<=n;i++)
 			if(isPrime(i)) a.add(i);
 		int[] r = new int[a.size()];
-		for(int i=0;i<a.size();i++){
+		for(int i=0;i<a.size();i++)
 			r[i] = a.get(i);
-		}
 		return r;
 	}
-	public static boolean isPrime(int d){
+	static boolean isPrime(int d){
 		return BigInteger.valueOf(d).isProbablePrime(32);
 	}
-	public static int[] prime_seive(int n){
+	//likely not useful, java can run for 2 min
+	static int[] prime_seive(int n){
 		ArrayList<Integer> p = new ArrayList<Integer>();
-		boolean[] a = new boolean[n+1];
-		for (int i=2;i<=n;i++){
-			if (!a[i]){
-				p.add(i);
-			}
-			for (int j=1;((j<=p.size()) && (i*p.get(j-1)<=n)); j++){
-				a[i*p.get(j-1)] = true ;
-				if (i%p.get(j-1) == 0) break;
-			}
-		}
+		boolean[] isPrime = new boolean[n + 1];
+	    for (int i = 2; i <= n; i++) {
+	        isPrime[i] = true;
+	    }
+	    for (int i = 2; i*i <= n; i++) {
+	        if (isPrime[i]) {
+	            for (int j = i; i*j <= n; j++) {
+	                isPrime[i*j] = false;
+	            }
+	        }
+	    }
+        for (int i = 2; i <= n; i++) {
+	        if (isPrime[i]) {
+	            p.add(i);
+	        }
+        }
 		int[] b = new int[p.size()];
 		for(int i=0;i<b.length;i++){
 			b[i] = p.get(i);
 		}
 		return b;
 	}
+	
 	public static long choose(int n, int r){
 		if(n-r>r){
 			r = n-r;
@@ -156,7 +186,7 @@ public class commons {
 		}
 		return prod;
 	}
-		   static String lastkdigit(int n,int k){
+	   static String lastkdigit(int n,int k){
 		   String s = padleft(Integer.toString(n),k,'0');
 		   return s.substring(s.length()-k);
 	   }
@@ -164,9 +194,9 @@ public class commons {
 	   static String padleft(String s, int n, char c){
 		   return n<=s.length()?s:c+padleft(s,n-1,c);
 	   }
-	   //reverse the string, note O(n^2) algorithm since string are immutable
+	   //thx to 
 	   static String reverse(String s){
-		   return s.length()<2?s:reverse(s.substring(1))+s.charAt(0);
+		   return (new StringBuilder(s)).reverse().toString();
 	   }
 	   //repeat the string n time, for example repeat("ab",3) = "ababab", O(|a|n^2)
 	   static String repeat(String a, int n){
@@ -174,9 +204,7 @@ public class commons {
 	   }
 	   //check if the character is alphanumberic, O(1)
 	   static boolean isAlphaNumeric(char c){
-            return ('A' >= c && 'Z' <= c) || 
-                ('a' >= c && 'z' <= c) || 
-                ('0' >= c && '9' <= c);
+		   return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".indexOf(c)!=-1;
 	   }
 	   //check if a regular expression matches the entire string. O(|s|)
 	   static boolean regex(String s,String p){
@@ -216,6 +244,27 @@ public class commons {
 		   }
 		   return b;
 	   }
+	   
+	   static void p(int[] a){
+		   for(int i=0;i<a.length;i++){
+			   System.out.print(a[i]+" ");
+		   }
+		   System.out.println();
+	   }
+		public static int nextInt(InputStream in){
+		    int ret = 0;
+		    boolean dig = false;
+
+		    try {
+				for (int c = 0; (c = in.read()) != -1; ) {
+				    if (c >= '0' && c <= '9') {
+				        dig = true;
+				        ret = ret * 10 + c - '0';
+				    } else if (dig) break;
+				}
+			} catch (IOException e) {}
+		    return ret;
+		}
 }
 
 class sorttemplate implements Comparator<int[]>{
