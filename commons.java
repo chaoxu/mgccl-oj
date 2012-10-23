@@ -19,67 +19,7 @@ public class commons {
 	    num.setMaximumFractionDigits(3);
 	    num.setGroupingUsed(false);
 	}
-    static int[] extended_gcd(int a, int b, int s1, int t1, int s2, int t2){
-    	int[] m = {s1,t1};
-        if(a*s1+b*t1!=1){
-            int r = (s2*a+t2*b)/(s1*a+t1*b);
-            s2 = (s2-r*s1);
-            t2 = (t2-r*t1);
-            m = extended_gcd(a, b, s2, t2, s1, t1);
-        }
-        return m;
-   }
-	//Find the digits of n in base b.
-    static ArrayList<Integer> digit(int n, int b){
-    	ArrayList<Integer> z = new ArrayList<Integer>();
-    	if(n>0){
-    		z = digit(n/b, b);
-    		z.add(n%b);
-    	}
-    	return z;
-    }
-   static int[] factorbasis(int n, int[] p){
-	    // p is a list of prime numbers
-		int k = n;
-		int[] f = new int[p.length];
-		for(int i=0;i<p.length;i++){
-			while((k%p[i])==0){
-				k = k/p[i];
-				f[i]++;
-			}
-		}
-		return f;
-	}
-   static int[] factor(int n, int[] p){
-	    int k = n;
-	    ArrayList<Integer> f = new ArrayList<Integer>();
-		int i = 0;
-		while(k!=1){
-			while((k%p[i])==0){
-				k = k/p[i];
-				f.add(p[i]);
-			}
-			i++;
-		}
-		int[] b = new int[f.size()];
-		for(int j=0;j<f.size();j++){
-			b[j] = f.get(j);
-		}
-		return b;
-   }
 
-   public static long pow_mod(int a,int e,int n){
-   	long t = 1;
-   	if(e==0){
-   		return t;
-   	}
-   	long sq = pow_mod(a,e/2,n);
-   	t = (sq*sq)%n;
-	    if(e%2==1){
-	    	t*=a;
-	    }
-	    return t%n;
-   }
 	public static int digit_sum(int n, int b){
 		int s = 0;
 		while(n!=0){
@@ -144,19 +84,6 @@ public class commons {
 		return b;
 	}
 	
-	public static long choose(int n, int r){
-		if(n-r>r){
-			r = n-r;
-		}
-		int s = 1;
-		for(int i=0, j=1; i<r;i++){
-			s*=(n-i);
-			for(;j<=r && s%j==0;++j){
-				s/=j;
-			}
-		}
-		return s;
-	}
 	public static int sum(int[] a){
 		int sum = 0;
 		for(int i=0;i<a.length;i++){
@@ -229,21 +156,6 @@ public class commons {
 	   static int c(int[] m, int x){
 		   return m[m.length-(x%m.length)];
 	   }
-	   //not tested, longest increasing subsequence
-	   //strictly increasing? or just increasing?
-	   static ArrayList<Integer> lis(ArrayList<Integer> l){
-		   ArrayList<Integer> b = new ArrayList<Integer>();
-		   for(int i=0;i<l.size();i++){
-	           int a = l.get(i);
-	           if(b.size()==0 || b.get(b.size()-1)<a){
-	               b.add(a);
-	           }else{
-	               int t = Math.max(0,Math.abs(Collections.binarySearch(b, a))-1);
-	               if(a<b.get(t)) b.set(t, a);
-	           }
-		   }
-		   return b;
-	   }
 	   
 	   static void p(int[] a){
 		   for(int i=0;i<a.length;i++){
@@ -264,6 +176,18 @@ public class commons {
 				}
 			} catch (IOException e) {}
 		    return ret;
+		}
+
+		@SuppressWarnings({"unchecked"})
+		public static <E> E[] CollectionToArray(Collection<E> c){
+			E[] a =(E[]) new Object[c.size()];
+			Iterator itr = c.iterator();
+			int i=0;
+			while(itr.hasNext()){
+				a[i] = (E) itr.next();
+				i++;
+			}
+			return a;
 		}
 }
 
