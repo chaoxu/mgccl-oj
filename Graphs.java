@@ -23,6 +23,7 @@ public class Graphs {
 		s.dis = 0;// Distance from source to source
 		
 		PriorityQueue<Vertex> q = new PriorityQueue<Vertex>(g.order(),new sortBydis());
+		q.add(s);
 		while(!q.isEmpty()){
 			Vertex u = q.poll();
 			if(u.dis==Integer.MAX_VALUE){
