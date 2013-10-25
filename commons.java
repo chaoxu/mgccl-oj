@@ -215,4 +215,23 @@ class sorttemplate2 implements Comparator<int[]>{
 		return 0;
 	}
 }
-
+//untested
+class UnionFind {
+	int[] s;
+	UnionFind(int n){
+		s = new int[n];
+		for(int i=0;i<n;i++){
+			s[i]=i;
+		}
+	}
+	public int find(int x){
+		if(s[x]==x){
+			return x;
+		}
+		s[x]=find(s[x]);
+		return s[x];
+	}
+	public void union(int x, int y){
+		s[find(x)] = find(y);
+	}
+}
